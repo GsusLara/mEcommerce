@@ -9,13 +9,13 @@ Es una plataforma que facilita la creacion de una web ecommerce a los usuarios r
 1. instala los paquetes
 $ yarn
 
-2.inicia el servidor web para la vista previa de tus cambios
+2. inicia el servidor web para la vista previa de tus cambios
 ```bash
 npm run dev
 # or
 yarn dev
 ```
-4. inicia en el navegador  
+3. inicia en el navegador  
 [http://localhost:3000](http://localhost:3000)
 
 
