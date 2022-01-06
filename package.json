@@ -1,10 +1,10 @@
 {
-  "name": "boilerplate",
+  "name": "mecommerce",
   "version": "0.1.0",
   "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/GsusLara/NextBoilerplate.git"
+    "url": "git+https://github.com/GsusLara/mEcommerce.git"
   },
   "author": "Jesus Lara Mendez",
   "license": "ISC",
