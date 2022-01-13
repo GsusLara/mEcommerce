@@ -1,4 +1,4 @@
-import Layout from "../components/layout"
+import Layout from "../layout"
 import DemoComponent from "../components/demoComponent"
 
 

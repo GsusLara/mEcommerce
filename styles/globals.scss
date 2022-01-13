@@ -1,5 +1,10 @@
 @import "~bootstrap/scss/bootstrap";
-@import "../components/layout/layout.scss";
+@import "./colores.scss";
+@import "../layout/layout.scss";
+@import "../layout/menu/menu.scss";
+@import "../layout/navbar/navbar.scss";
+@import "../layout/footer/footer.scss";
+
 html,
 body {
   padding: 0;
