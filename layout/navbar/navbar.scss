@@ -1,3 +1,49 @@
-.navbar-toggler{
-    border:none;
+.navbar {
+  background: $fondoEncabezados;
+}
+.imglogo {
+  transition: all 0.5s;
+  &:hover {
+    transform: translateX(-15px);
+  }
+}
+.buscador {
+  outline: none;
+  background-color: transparent;
+  border: 0;
+  border-bottom: 2px solid $textoguia;
+  border-radius: 0;
+  color: $textoguia;
+  width: 30vw;
+  transition: width 0.7s;
+  &:focus {
+    outline: none;
+    background-color: transparent;
+    border: 0;
+    border-bottom: 2px solid $textoguia;
+    border-radius: 0;
+    color: $textoguia;
+    box-shadow: none;
+    width: calc(30vw + 80px);
+  }
+}
+.navbar-toggler {
+  border: none;
+}
+.btnbuscar,
+.iconosNav {
+  color: $textoguia;
+  &:hover {
+    color: $textoguiaSombra;
+  }
+}
+.opcionesNav {
+  font-size: small;
+  color: $textoguia;
+}
+
+@media (min-width: 991px) {
+  .opcionesNav {
+    display: none;
+  }
 }
