@@ -1,11 +1,17 @@
+import { useState } from 'react'
 import Image from 'next/image'
 import Link from "next/link"
 import logo from "../../public/logo.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
+
 export default function Navbar() {
+  const [btnMenu, setbtnMenu] = useState(false)
+  const menuActivo=()=>{
+    setbtnMenu(!btnMenu);
+  }
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <nav className="navbar navbar-expand-lg navbar-light">
       <div className="container">
         <div className="col-5 col-md-3 col-lg-2">
           <Logo />
@@ -17,37 +23,41 @@ export default function Navbar() {
           data-bs-target="#navbarSupportedContent"
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
-          aria-label="Toggle navigation">
-          <span className="navbar-toggler-icon"></span>
+          aria-label="Toggle navigation"
+          onClick={()=> menuActivo()}>
+            {btnMenu?
+            <FontAwesomeIcon className="iconosNav" icon={["fas", "times"]} /> :
+            <FontAwesomeIcon className="iconosNav" icon={["fas", "bars"]} />
+          }
         </button>
         <div className="collapse navbar-collapse ms-md-5" id="navbarSupportedContent">
+          <form className="d-flex mx-auto my-2 my-lg-0">
+            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+            <button className="btnbuscar btn fs-5" type="submit"> <FontAwesomeIcon icon={["fas", "search"]} /></button>
+          </form>
           <ul className="navbar-nav  mb-2 mb-lg-0 ms-md-auto">
+            <li className="nav-item">
+              <a
+                className="nav-link p-0 fs-4 "
+                href="#">
+                <FontAwesomeIcon className="iconosNav" icon={["far", "user"]} /><span className="ms-2 opcionesNav">Mi cuenta</span>
+              </a>
+            </li>
+            <li className="nav-item">
+              <a
+                className="nav-link p-0 fs-4 mx-lg-3"
+                href="#">
+                <FontAwesomeIcon className="iconosNav" icon={["far", "heart"]} /><span className="ms-2 opcionesNav">Favoritos</span>
+              </a>
+            </li>
             <li className="nav-item">
               <a
                 className="nav-link p-0 fs-4"
                 href="#">
-                <FontAwesomeIcon icon={["far", "user"]} />
+                <FontAwesomeIcon className="iconosNav" icon={["fas", "shopping-cart"]} /><span className="ms-2 opcionesNav">carrito</span>
               </a>
             </li>
-            <li className="nav-item">
-              <a 
-              className="nav-link p-0 fs-4 mx-3" 
-              href="#">
-                <FontAwesomeIcon icon={["far", "heart"]} />
-                </a>
-            </li>
-            <li className="nav-item">
-            <a 
-              className="nav-link p-0 fs-4" 
-              href="#">
-                <FontAwesomeIcon icon={["fas", "shopping-cart"]} />
-                </a>
-            </li>
           </ul>
-          {/* <form className="d-flex">
-            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-            <button className="btn btn-outline-success" type="submit">Search</button>
-          </form> */}
         </div>
       </div>
     </nav>

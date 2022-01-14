@@ -1,3 +1,22 @@
+.navbar{
+background: $fondoEncabezados;
+}
 .navbar-toggler{
     border:none;
+}
+.btnbuscar, .iconosNav {
+    color: $textoguia;
+    &:hover{
+        color:$textoguiaSombra;
+    }
+}
+.opcionesNav{
+    font-size: small;
+    color: $textoguia;
+}
+
+@media (min-width:991px){
+    .opcionesNav{
+        display:none;
+    }
 }
