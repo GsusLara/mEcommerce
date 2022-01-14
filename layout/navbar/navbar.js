@@ -13,7 +13,7 @@ export default function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
       <div className="container">
-        <div className="col-5 col-md-3 col-lg-2">
+        <div className="col-5 col-md-3 col-lg-2 imglogo">
           <Logo />
         </div>
         <button
@@ -32,7 +32,7 @@ export default function Navbar() {
         </button>
         <div className="collapse navbar-collapse ms-md-5" id="navbarSupportedContent">
           <form className="d-flex mx-auto my-2 my-lg-0">
-            <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+            <input className="form-control buscador" type="text"/>
             <button className="btnbuscar btn fs-5" type="submit"> <FontAwesomeIcon icon={["fas", "search"]} /></button>
           </form>
           <ul className="navbar-nav  mb-2 mb-lg-0 ms-md-auto">
@@ -40,21 +40,24 @@ export default function Navbar() {
               <a
                 className="nav-link p-0 fs-4 "
                 href="#">
-                <FontAwesomeIcon className="iconosNav" icon={["far", "user"]} /><span className="ms-2 opcionesNav">Mi cuenta</span>
+                <FontAwesomeIcon className="iconosNav" icon={["far", "user"]} />
+                <span className="ms-2 opcionesNav">Mi cuenta</span>
               </a>
             </li>
             <li className="nav-item">
               <a
                 className="nav-link p-0 fs-4 mx-lg-3"
                 href="#">
-                <FontAwesomeIcon className="iconosNav" icon={["far", "heart"]} /><span className="ms-2 opcionesNav">Favoritos</span>
+                <FontAwesomeIcon className="iconosNav" icon={["far", "heart"]} />
+                <span className="ms-2 opcionesNav">Favoritos</span>
               </a>
             </li>
             <li className="nav-item">
               <a
                 className="nav-link p-0 fs-4"
                 href="#">
-                <FontAwesomeIcon className="iconosNav" icon={["fas", "shopping-cart"]} /><span className="ms-2 opcionesNav">carrito</span>
+                <FontAwesomeIcon className="iconosNav" icon={["fas", "shopping-cart"]} />
+                <span className="ms-2 opcionesNav">carrito</span>
               </a>
             </li>
           </ul>
