@@ -1,3 +1,14 @@
-.barraMenu{
-    background: $fondoEncabezados;
+.barraMenu {
+  background: $fondoEncabezadoSecundario;
+  color: $textoguia;
+}
+.btnMenu {
+  background: none;
+  border: none;
+  color: $textoguia;
+  &:hover,&:active,&:focus {
+    background: none;
+    border: none;
+    color: $textoguiaSombra;
+  }
 }
