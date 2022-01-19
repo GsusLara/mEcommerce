@@ -11,7 +11,6 @@ export default function Layout(props) {
             <div className="container Contenido">
                 {children}
             </div>
-            <Footer/>
         </div>
     )
 }

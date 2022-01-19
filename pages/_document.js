@@ -10,7 +10,7 @@ class MyDocument extends Document {
         return (
             <Html>
                 <Head>
-                    <meta name="description" content="Plantilla de trabajo" />
+                    <meta name="description" content="Ecomerce" />
                     <meta charSet="utf-8" />
                     <meta name="autor " content="Jesus Lara" />
                     <link rel="icon" href="/favicon.ico" />

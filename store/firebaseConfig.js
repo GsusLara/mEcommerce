@@ -1,12 +1,18 @@
 import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { getStorage } from "firebase/storage"
+import {getAuth} from "firebase/auth";
 
-const firebaseConfig = JSON.parse(process.env.PUBLIC_FIREBASE_CONFIG);
+const firebaseConfig = {
+    apiKey: "",
+    authDomain: "",
+    projectId: "",
+    storageBucket: "",
+    messagingSenderId: "",
+    appId: "",
+    measurementId: ""
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const storage = getStorage(app);
+const auth = getAuth(app);
 
-export {analytics, storage};
+export {auth};
