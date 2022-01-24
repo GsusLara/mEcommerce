@@ -1,15 +1,7 @@
 import { initializeApp } from "firebase/app";
 import {getAuth} from "firebase/auth";
 
-const firebaseConfig = {
-    apiKey: "",
-    authDomain: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: "",
-    appId: "",
-    measurementId: ""
-  };
+const firebaseConfig = JSON.parse(process.env.NEXT_PUBLIC_FIREBASE_CONFIG);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
