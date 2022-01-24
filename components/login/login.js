@@ -52,7 +52,7 @@ export default function Login() {
                         <h5 className="modal-title" id="exampleModalLabel">{conCuenta ? "Iniciar sesión" : "Crear cuenta"}</h5>
                         <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body text-center">
+                    <div className="modal-body text-center">
                         <article className="card-body mx-auto" style={{ maxWidth: "400px" }}>
                             
                             {conCuenta ?
@@ -116,7 +116,7 @@ export default function Login() {
                                 <div>
                                     <button className="btn btn-primary mt-2 mb-3" onClick={() => verificar()}> {conCuenta ? "ingresar" : "Registrarme"}</button>
                                 </div>
-                                <div class="modal-footer">
+                                <div className="modal-footer">
                                     {conCuenta ?
                                         <p>Registrate {" "}<a className="text-primary loginButton" onClick={() => setconCuenta(false)}>aqui</a> </p> :
                                         <p>tienes cuenta? <a className="text-primary loginButton" onClick={() => setconCuenta(true)}>Iniciar sesión</a> </p>
