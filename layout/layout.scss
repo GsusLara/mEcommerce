@@ -1,9 +1,15 @@
-.Pagina{
-    height: 100vh;
-    margin: 0;
-    padding: 0;
+.Pagina {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-image: url(https://firebasestorage.googleapis.com/v0/b/mecommerce-2b912.appspot.com/o/asets%2FwallpaperGaming.webp?alt=media&token=08403be6-30f4-4e72-ab21-ff20c83af3fc);
+  background-size: cover;
 }
-.Contenido{
-    background: $fondoPagina;
-    height: calc(100vh - 120px);
+.Contenido {
+  background: $fondoPagina;
+  height: calc(100vh - 95px);
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }

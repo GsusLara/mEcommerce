@@ -3,11 +3,12 @@ import Image from 'next/image'
 import Link from "next/link"
 import logo from "../../public/logo.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Login from '../../components/login';
 
 
 export default function Navbar() {
   const [btnMenu, setbtnMenu] = useState(false)
-  const menuActivo=()=>{
+  const menuActivo = () => {
     setbtnMenu(!btnMenu);
   }
   return (
@@ -24,22 +25,23 @@ export default function Navbar() {
           aria-controls="navbarSupportedContent"
           aria-expanded="false"
           aria-label="Toggle navigation"
-          onClick={()=> menuActivo()}>
-            {btnMenu?
+          onClick={() => menuActivo()}>
+          {btnMenu ?
             <FontAwesomeIcon className="iconosNav" icon={["fas", "times"]} /> :
             <FontAwesomeIcon className="iconosNav" icon={["fas", "bars"]} />
           }
         </button>
         <div className="collapse navbar-collapse ms-md-5" id="navbarSupportedContent">
           <form className="d-flex mx-auto my-2 my-lg-0">
-            <input className="form-control buscador" type="text"/>
+            <input className="form-control buscador" type="text" />
             <button className="btnbuscar btn fs-5" type="submit"> <FontAwesomeIcon icon={["fas", "search"]} /></button>
           </form>
           <ul className="navbar-nav  mb-2 mb-lg-0 ms-md-auto">
             <li className="nav-item">
               <a
                 className="nav-link p-0 fs-4 "
-                href="#">
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
                 <FontAwesomeIcon className="iconosNav" icon={["far", "user"]} />
                 <span className="ms-2 opcionesNav">Mi cuenta</span>
               </a>
@@ -63,6 +65,12 @@ export default function Navbar() {
           </ul>
         </div>
       </div>
+
+      
+            
+            <Login/>
+          
+
     </nav>
   )
 }
