@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { auth } from "../../store/firebaseConfig";
+import { toast } from "react-toastify"
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
 
 
@@ -18,16 +19,16 @@ export default function Login() {
         })
     }
     const verificar = () => {
-        if (credentials.email =="" || credentials.password==""){
-            alert("complete todos los campos")
-        }else if (revisionEmail.test(credentials.email) !== true ) {
-            alert("ingrese un email válido")
-        }else if (credentials.password.length < 8){
-            alert("contraseña invalida")
+        if (credentials.email == "" || credentials.password == "") {
+            toast.error("Complete todos los campos")
+        } else if (revisionEmail.test(credentials.email) !== true) {
+            toast.error("Ingrese un email válido")
+        } else if (credentials.password.length < 8) {
+            toast.error("Contraseña invalida")
         } else if (conCuenta) {
             iniciaUser()
         } else if (credentials.password !== credentials.password2) {
-            alert("las contraseñas no coinciden")
+            toast.error("Las contraseñas no coinciden")
         } else {
             registerUser();
         }
@@ -59,10 +60,9 @@ export default function Login() {
                     </div>
                     <div className="modal-body text-center">
                         <div className="card-body mx-auto" style={{ maxWidth: "400px" }}>
-                            <button className="btn btn-primary " onClick={() => signInWithRedirect(auth, googleProvider)}><img src="/google.ico" alt="inicio google" />oogle</button>
-                            <p className="my-3">ó</p>
+                            <button className="btn btn-outline-primary" onClick={() => signInWithRedirect(auth, googleProvider)}><img src="/google.ico" alt="inicio google" />oogle</button>
+                            <p className="linea my-3 fs-5"><span className="px-2 bg-dark">ó</span></p>
                             <div>
-
                                 <form>
                                     <div className="input-group mb-3">
                                         <span className="input-group-text" id="basic-addon1"><FontAwesomeIcon icon={["fa", "envelope"]} /></span>
@@ -80,14 +80,14 @@ export default function Login() {
                                             }}
                                         />
                                     </div>
-                                    <div className="input-group mb-3">
+                                    <div className="input-group">
                                         <span className="input-group-text" id="basic-addon1"><FontAwesomeIcon icon={["fa", "lock"]} /></span>
                                         <input
                                             className="form-control"
                                             name="password"
                                             type="password"
                                             autoComplete="on"
-                                            placeholder={conCuenta ? "password" : "contraseña superior a 8 digitos"}
+                                            placeholder="contraseña"
                                             onChange={changeUser}
                                             onKeyPress={e => {
                                                 if (e.key == "Enter") {
@@ -95,6 +95,9 @@ export default function Login() {
                                                 }
                                             }}
                                         />
+                                    </div>
+                                    <div id="passwordHelpBlock" className="form-text mb-3" style={{ display: conCuenta ? "none" : "block" }}>
+                                        La contraseña debe ser superior a 8 caracteres
                                     </div>
                                     <div style={{ display: conCuenta ? "none" : "block" }}>
                                         <div className="input-group mb-3">
