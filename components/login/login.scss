@@ -1,9 +1,39 @@
-.modal-content{
-    color:$textoClaro;
+.modal-content {
+    color:$textoguia;
 }
 .loginButton{
     cursor: pointer;
 }
 .google{
     background:transparent;
+}
+.modal-header{
+    border-bottom: none !important;
+}
+.modal-footer,.card-body{
+ border-top: 1px solid $textoguia !important;
+}
+.closeBtn{
+    background: transparent;
+    border: none;
+    color:$textoguia;
+    &:hover{
+        color: $textoguiaSombra;
+    }
+}
+.linea {
+    position: relative;
+    z-index: 1;
+  &:before {
+    border-top: 1px solid $textoguiaSombra;
+    content: "";
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 95%;
+    z-index: -1;
+  }
 }
