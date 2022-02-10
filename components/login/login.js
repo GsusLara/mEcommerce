@@ -9,6 +9,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithR
 export default function Login() {
     const googleProvider = new GoogleAuthProvider();
     const [conCuenta, setconCuenta] = useState(true);
+    const [loading, setloading] = useState(false);
     const [credentials, setcredentials] = useState({ email: "", password: "", password2: "" });
     const revisionEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
@@ -24,7 +25,9 @@ export default function Login() {
         } else if (revisionEmail.test(credentials.email) !== true) {
             toast.error("Ingrese un email válido")
         } else if (credentials.password.length < 8) {
-            toast.error("Contraseña invalida")
+            conCuenta ?
+                toast.error("Email o contraseña invalido") :
+                toast.error("La contraseña debe ser superior a 8 caractéres")
         } else if (conCuenta) {
             iniciaUser()
         } else if (credentials.password !== credentials.password2) {
@@ -34,22 +37,25 @@ export default function Login() {
         }
     }
     const registerUser = async () => {
+        setloading(true);
         try {
             await createUserWithEmailAndPassword(auth, credentials.email, credentials.password);
             ///accion
         } catch (error) {
-            console.log(error)
+            toast.error("Correo en uso, inicia sesion para acceder")
+            setconCuenta(true)
         }
+        setloading(false)
     }
     const iniciaUser = async () => {
+        setloading(true);
         try {
-            await signInWithEmailAndPassword(auth, credentials.email, credentials.password);
-            ///accion
+            await signInWithEmailAndPassword(auth, credentials.email, credentials.password)
         } catch (error) {
-            console.log(error)
+            toast.error("Email o contraseña invalido")
         }
+        setloading(false)
     }
-
     return (
         <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
@@ -71,7 +77,7 @@ export default function Login() {
                                             name="email"
                                             type="email"
                                             autoComplete="on"
-                                            placeholder="Email address"
+                                            placeholder="Correo electrónico"
                                             onChange={changeUser}
                                             onKeyPress={e => {
                                                 if (e.key == "Enter") {
@@ -119,7 +125,15 @@ export default function Login() {
                                     </div>
                                 </form>
                                 <div>
-                                    <button className="btn btn-primary mt-2 mb-3" onClick={() => verificar()}> {conCuenta ? "ingresar" : "Registrarme"}</button>
+                                    <button
+                                        className="btn btn-primary mt-2 mb-3"
+                                        onClick={() => verificar()}>
+                                        {loading ?
+                                            <div className="spinner-border spinner-border-sm" role="status">
+                                                <span className="visually-hidden">Loading...</span>
+                                            </div>
+                                            : conCuenta ? "ingresar" : "Registrarme"}
+                                    </button>
                                 </div>
                                 <div className="modal-footer">
                                     {conCuenta ?
