@@ -1,10 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { auth } from "../../store/firebaseConfig";
 import { toast } from "react-toastify"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
-
-
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithRedirect, GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
 
 export default function Login() {
     const googleProvider = new GoogleAuthProvider();
@@ -40,7 +38,6 @@ export default function Login() {
         setloading(true);
         try {
             await createUserWithEmailAndPassword(auth, credentials.email, credentials.password);
-            ///accion
         } catch (error) {
             toast.error("Correo en uso, inicia sesion para acceder")
             setconCuenta(true)
@@ -56,6 +53,22 @@ export default function Login() {
         }
         setloading(false)
     }
+    const iniciaGoogle = async()=>{
+        try {
+            await signInWithRedirect(auth, googleProvider)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useEffect(() => {
+        const autenticando = onAuthStateChanged(auth, (usuarioFirebase) => {
+            console.log(usuarioFirebase)
+        })
+        return () => {
+            autenticando()
+        }
+    }, [])
+
     return (
         <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
@@ -66,7 +79,7 @@ export default function Login() {
                     </div>
                     <div className="modal-body text-center">
                         <div className="card-body mx-auto" style={{ maxWidth: "400px" }}>
-                            <button className="btn btn-outline-primary" onClick={() => signInWithRedirect(auth, googleProvider)}><img src="/google.ico" alt="inicio google" />oogle</button>
+                            <button className="btn btn-outline-primary" onClick={() => iniciaGoogle()}><img src="/google.ico" alt="inicio google" />oogle</button>
                             <p className="linea my-3 fs-5"><span className="px-2 bg-dark">ó</span></p>
                             <div>
                                 <form>
@@ -102,31 +115,35 @@ export default function Login() {
                                             }}
                                         />
                                     </div>
-                                    <div id="passwordHelpBlock" className="form-text mb-3" style={{ display: conCuenta ? "none" : "block" }}>
-                                        La contraseña debe ser superior a 8 caracteres
-                                    </div>
-                                    <div style={{ display: conCuenta ? "none" : "block" }}>
-                                        <div className="input-group mb-3">
-                                            <span className="input-group-text" id="basic-addon1"><FontAwesomeIcon icon={["fa", "lock"]} /></span>
-                                            <input
-                                                className="form-control"
-                                                name="password2"
-                                                type="password"
-                                                autoComplete="on"
-                                                placeholder="confirme su contraseña"
-                                                onChange={changeUser}
-                                                onKeyPress={e => {
-                                                    if (e.key == "Enter") {
-                                                        verificar();
-                                                    }
-                                                }}
-                                            />
-                                        </div>
-                                    </div>
+                                    {!conCuenta &&
+                                        <>
+                                            <div id="passwordHelpBlock" className="form-text mb-2">
+                                                La contraseña debe ser superior a 8 caracteres
+                                            </div>
+                                            <div>
+                                                <div className="input-group">
+                                                    <span className="input-group-text" id="basic-addon1"><FontAwesomeIcon icon={["fa", "lock"]} /></span>
+                                                    <input
+                                                        className="form-control"
+                                                        name="password2"
+                                                        type="password"
+                                                        autoComplete="on"
+                                                        placeholder="confirme su contraseña"
+                                                        onChange={changeUser}
+                                                        onKeyPress={e => {
+                                                            if (e.key == "Enter") {
+                                                                verificar();
+                                                            }
+                                                        }}
+                                                    />
+                                                </div>
+                                            </div>
+                                        </>
+                                    }
                                 </form>
                                 <div>
                                     <button
-                                        className="btn btn-primary mt-2 mb-3"
+                                        className="btn btn-primary mt-3 mb-3"
                                         onClick={() => verificar()}>
                                         {loading ?
                                             <div className="spinner-border spinner-border-sm" role="status">

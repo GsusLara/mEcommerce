@@ -4,6 +4,8 @@ import Link from "next/link"
 import logo from "../../public/logo.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Login from '../../components/login';
+import { auth } from "../../store/firebaseConfig";
+import { signOut } from "firebase/auth"
 
 
 export default function Navbar() {
@@ -37,6 +39,7 @@ export default function Navbar() {
             <button className="btnbuscar btn fs-5" type="submit"> <FontAwesomeIcon icon={["fas", "search"]} /></button>
           </form>
           <ul className="navbar-nav  mb-2 mb-lg-0 ms-md-auto">
+            <li className="nav-item"><a className="nav-link" onClick={()=>signOut(auth)}>salir</a></li>
             <li className="nav-item">
               <a
                 className="nav-link p-0 fs-4 "
@@ -65,12 +68,7 @@ export default function Navbar() {
           </ul>
         </div>
       </div>
-
-      
-            
-            <Login/>
-          
-
+      <Login />
     </nav>
   )
 }
