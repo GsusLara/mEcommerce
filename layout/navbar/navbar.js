@@ -12,15 +12,26 @@ import { signOut, onAuthStateChanged } from "firebase/auth"
 export default function Navbar() {
   const [btnMenu, setbtnMenu] = useState(false)
   const [show, setShow] = useState(false);
+  const [sesion, setsesion] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const menuActivo = () => {
     setbtnMenu(!btnMenu);
   }
+  const offSesion = () => {
+    setsesion(false);
+    signOut(auth);
+  }
+  const inicio = (data) => {
+    setsesion(true);
+    handleClose();
+    console.log(data);
+  }
   useEffect(() => {
     const autenticando = onAuthStateChanged(auth, (usuarioFirebase) => {
-      console.log(usuarioFirebase)
-      handleClose
+      if (usuarioFirebase) {
+        inicio(usuarioFirebase);
+      }
     })
     return () => {
       autenticando()
@@ -53,52 +64,56 @@ export default function Navbar() {
             <button className="btnbuscar btn fs-5" type="submit"> <FontAwesomeIcon icon={["fas", "search"]} /></button>
           </form>
           <ul className="navbar-nav  mb-2 mb-lg-0 ms-md-auto">
-            <li className="nav-item"><a className="nav-link" onClick={() => signOut(auth)}>salir</a></li>
             <li className="nav-item">
               <a
-                className="nav-link p-0 fs-4 "
-                onClick={handleShow}>
-                <FontAwesomeIcon className="iconosNav" icon={["far", "user"]} />
-                <span className="ms-2 opcionesNav">Mi cuenta</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link p-0 fs-4 mx-lg-3"
-                href="#">
-                <FontAwesomeIcon className="iconosNav" icon={["far", "heart"]} />
-                <span className="ms-2 opcionesNav">Favoritos</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link p-0 fs-4"
+                className="nav-link p-0 fs-4 me-lg-3"
                 href="#">
                 <FontAwesomeIcon className="iconosNav" icon={["fas", "shopping-cart"]} />
                 <span className="ms-2 opcionesNav">carrito</span>
               </a>
             </li>
+            {!sesion &&
+              <li className="nav-item">
+                <a
+                  className="nav-link p-0 fs-4"
+                  onClick={handleShow}
+                  href="#">
+                  <FontAwesomeIcon className="iconosNav" icon="fa-solid fa-user-pen" />
+                  <span className="ms-2 opcionesNav">Entrar/Registrarse</span>
+                </a>
+              </li>
+            }
+            {sesion &&
+              <>
+                <li className="nav-item">
+                  <a
+                    className="nav-link p-0 fs-4 "
+                    href="#">
+                    <FontAwesomeIcon className="iconosNav" icon={["far", "user"]} />
+                    <span className="ms-2 opcionesNav">Mi cuenta</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className="nav-link p-0 fs-4 mx-lg-3"
+                    href="#">
+                    <FontAwesomeIcon className="iconosNav" icon={["far", "heart"]} />
+                    <span className="ms-2 opcionesNav">Favoritos</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link p-0 fs-4" onClick={() => offSesion()} href="#">
+                    <FontAwesomeIcon className="iconosNav" icon="fa-solid fa-arrow-right-from-bracket" />
+                    <span className="ms-2 opcionesNav">Salir</span>
+                  </a>
+                </li>
+              </>
+            }
           </ul>
         </div>
       </div>
       <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
         <Login handleClose={handleClose} handleShow={handleShow} />
-        {/* <Modal.Header closeButton>
-          <Modal.Title id="example-custom-modal-styling-title">
-            Custom Modal Styling
-          </Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <p>
-            Ipsum molestiae natus adipisci modi eligendi? Debitis amet quae unde
-            commodi aspernatur enim, consectetur. Cumque deleniti temporibus
-            ipsam atque a dolores quisquam quisquam adipisci possimus
-            laboriosam. Quibusdam facilis doloribus debitis! Sit quasi quod
-            accusamus eos quod. Ab quos consequuntur eaque quo rem! Mollitia
-            reiciendis porro quo magni incidunt dolore amet atque facilis ipsum
-            deleniti rem!
-          </p>
-        </Modal.Body> */}
       </Modal>
     </nav>
   )
