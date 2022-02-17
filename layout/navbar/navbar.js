@@ -1,16 +1,43 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import Modal from 'react-bootstrap/Modal'
 import Image from 'next/image'
 import Link from "next/link"
 import logo from "../../public/logo.png"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Login from '../../components/login';
+import { auth } from "../../store/firebaseConfig";
+import { signOut, onAuthStateChanged } from "firebase/auth"
 
 
 export default function Navbar() {
   const [btnMenu, setbtnMenu] = useState(false)
+  const [show, setShow] = useState(false);
+  const [sesion, setsesion] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const menuActivo = () => {
     setbtnMenu(!btnMenu);
   }
+  const offSesion = () => {
+    setsesion(false);
+    signOut(auth);
+  }
+  const inicio = (data) => {
+    setsesion(true);
+    handleClose();
+    console.log(data);
+  }
+  useEffect(() => {
+    const autenticando = onAuthStateChanged(auth, (usuarioFirebase) => {
+      if (usuarioFirebase) {
+        inicio(usuarioFirebase);
+      }
+    })
+    return () => {
+      autenticando()
+    }
+  }, [])
+
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
       <div className="container">
@@ -39,38 +66,55 @@ export default function Navbar() {
           <ul className="navbar-nav  mb-2 mb-lg-0 ms-md-auto">
             <li className="nav-item">
               <a
-                className="nav-link p-0 fs-4 "
-                data-bs-toggle="modal"
-                data-bs-target="#exampleModal">
-                <FontAwesomeIcon className="iconosNav" icon={["far", "user"]} />
-                <span className="ms-2 opcionesNav">Mi cuenta</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link p-0 fs-4 mx-lg-3"
-                href="#">
-                <FontAwesomeIcon className="iconosNav" icon={["far", "heart"]} />
-                <span className="ms-2 opcionesNav">Favoritos</span>
-              </a>
-            </li>
-            <li className="nav-item">
-              <a
-                className="nav-link p-0 fs-4"
+                className="nav-link p-0 fs-4 me-lg-3"
                 href="#">
                 <FontAwesomeIcon className="iconosNav" icon={["fas", "shopping-cart"]} />
                 <span className="ms-2 opcionesNav">carrito</span>
               </a>
             </li>
+            {!sesion &&
+              <li className="nav-item">
+                <a
+                  className="nav-link p-0 fs-4"
+                  onClick={handleShow}
+                  href="#">
+                  <FontAwesomeIcon className="iconosNav" icon="fa-solid fa-user-pen" />
+                  <span className="ms-2 opcionesNav">Entrar/Registrarse</span>
+                </a>
+              </li>
+            }
+            {sesion &&
+              <>
+                <li className="nav-item">
+                  <a
+                    className="nav-link p-0 fs-4 "
+                    href="#">
+                    <FontAwesomeIcon className="iconosNav" icon={["far", "user"]} />
+                    <span className="ms-2 opcionesNav">Mi cuenta</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a
+                    className="nav-link p-0 fs-4 mx-lg-3"
+                    href="#">
+                    <FontAwesomeIcon className="iconosNav" icon={["far", "heart"]} />
+                    <span className="ms-2 opcionesNav">Favoritos</span>
+                  </a>
+                </li>
+                <li className="nav-item">
+                  <a className="nav-link p-0 fs-4" onClick={() => offSesion()} href="#">
+                    <FontAwesomeIcon className="iconosNav" icon="fa-solid fa-arrow-right-from-bracket" />
+                    <span className="ms-2 opcionesNav">Salir</span>
+                  </a>
+                </li>
+              </>
+            }
           </ul>
         </div>
       </div>
-
-      
-            
-            <Login/>
-          
-
+      <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false}>
+        <Login handleClose={handleClose} handleShow={handleShow} />
+      </Modal>
     </nav>
   )
 }
