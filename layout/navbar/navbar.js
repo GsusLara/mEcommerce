@@ -74,13 +74,12 @@ export default function Navbar() {
             </li>
             {!sesion &&
               <li className="nav-item">
-                <a
-                  className="nav-link p-0 fs-4"
-                  onClick={handleShow}
-                  href="#">
+                <button
+                  className=" navButton nav-link p-0 fs-4"
+                  onClick={handleShow}>
                   <FontAwesomeIcon className="iconosNav" icon="fa-solid fa-user-pen" />
                   <span className="ms-2 opcionesNav">Entrar/Registrarse</span>
-                </a>
+                </button>
               </li>
             }
             {sesion &&
@@ -102,10 +101,10 @@ export default function Navbar() {
                   </a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link p-0 fs-4" onClick={() => offSesion()} href="#">
+                  <button className="navButton nav-link p-0 fs-4" onClick={() => offSesion()} >
                     <FontAwesomeIcon className="iconosNav" icon="fa-solid fa-arrow-right-from-bracket" />
                     <span className="ms-2 opcionesNav">Salir</span>
-                  </a>
+                  </button>
                 </li>
               </>
             }

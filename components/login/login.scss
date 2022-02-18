@@ -1,29 +1,32 @@
 .modal-content {
-    color:$textoguia;
+  color: $textoguia;
 }
-.loginButton{
-    cursor: pointer;
+.loginButton,
+.btnRecuperar {
+  cursor: pointer;
+  text-decoration: none;
 }
-.google{
-    background:transparent;
+.google {
+  background: transparent;
 }
-.modal-header{
-    border-bottom: none !important;
+.modal-header {
+  border-bottom: none !important;
 }
-.modal-footer,.card-body{
- border-top: 1px solid $textoguia !important;
+.modal-footer,
+.card-body {
+  border-top: 1px solid $textoguia !important;
 }
-.closeBtn{
-    background: transparent;
-    border: none;
-    color:$textoguia;
-    &:hover{
-        color: $textoguiaSombra;
-    }
+.closeBtn {
+  background: transparent;
+  border: none;
+  color: $textoguia;
+  &:hover {
+    color: $textoguiaSombra;
+  }
 }
 .linea {
-    position: relative;
-    z-index: 1;
+  position: relative;
+  z-index: 1;
   &:before {
     border-top: 1px solid $textoguiaSombra;
     content: "";
@@ -36,4 +39,8 @@
     width: 95%;
     z-index: -1;
   }
+}
+.navButton {
+  background: transparent;
+  border: none;
 }

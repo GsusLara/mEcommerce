@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { auth } from "../../store/firebaseConfig";
 import { toast } from "react-toastify"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithRedirect, GoogleAuthProvider } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signInWithRedirect, GoogleAuthProvider, sendPasswordResetEmail } from "firebase/auth";
 
 export default function Login(props) {
     const { handleClose } = props
@@ -61,6 +61,19 @@ export default function Login(props) {
         }
     }
 
+    const recuPassword = async () => {
+        if (credentials.email == "" || revisionEmail.test(credentials.email) !== true) {
+            toast.error("Email invalido")
+        } else {
+            try {
+                await sendPasswordResetEmail(auth, credentials.email);
+                toast.success(`Se han enviado la confirmacion al correo electronico ${credentials.email}`)
+            } catch (error) {
+                toast.error("Correo electronico no registrado")
+            }
+        }
+    }
+
     return (
         <div className="modal-content bg-dark">
             <div className="modal-header">
@@ -105,10 +118,19 @@ export default function Login(props) {
                                     }}
                                 />
                             </div>
+                            {conCuenta &&
+                                <div className="text-start my-2">
+                                    <a onClick={() => recuPassword()} id="passwordHelpBlock" className="form-text btnRecuperar">
+                                        Recuperar contraseña
+                                    </a>
+                                </div>
+                            }
                             {!conCuenta &&
                                 <>
-                                    <div id="passwordHelpBlock" className="form-text mb-2">
-                                        La contraseña debe ser superior a 8 caracteres
+                                    <div className="text-start my-2">
+                                        <div id="passwordHelpBlock" className="form-text">
+                                            La contraseña debe ser superior a 8 caracteres
+                                        </div>
                                     </div>
                                     <div>
                                         <div className="input-group">
